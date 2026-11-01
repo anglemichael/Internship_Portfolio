@@ -18,7 +18,7 @@ if (heroTitle){
  
 let themeBtn = document.querySelector(".theme-toggle");
 function updateThemeIcon(theme) {
-    themeBtn.textContent = theme === "dark" ? "🌙" : "☀️";
+    themeBtn.textContent = theme === "dark" ? "☀️" : "🌙";
 }
 if (themeBtn) {
     let savedTheme = localStorage.getItem("theme") || "light";
@@ -76,8 +76,8 @@ window.addEventListener("scroll", () => {
             current = section.id;
         }
     });
-   navitems.forEach(link=>{
-        link.classList.remover("active");
+   navItems.forEach(link=>{
+        link.classList.remove("active");
         if(link.getAttribute("href")===`#${current}`){
             link.classList.add("active");
         }
