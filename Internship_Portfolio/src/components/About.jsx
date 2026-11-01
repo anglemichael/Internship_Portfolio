@@ -1,28 +1,20 @@
 
 function About() {
     return (
-        <section id="about" className="about-section">
+        <section className="about-section" id="about">
+            <div className="about-container">
+                <p className="section-subtitle">Get to know me</p>
 
-            <h2>About Me</h2>
+                <h2 className="section-title">About Me</h2>
 
-            <figure className="profile-figure">
-
-                <img
-                    src="/images/Profile.jpg"
-                    alt="Profile Picture"
-                />
-
-                <figcaption>
-                    Angel - developer in the making
-                </figcaption>
-
-            </figure>
-
-            <p>
-                I love building programs, moreover using my analytical
-                skills to find better and simpler ways to connect elements.
-            </p>
-
+                <div className="about-content">
+                    <p>
+                        I love building programs, moreover using my
+                        analytical skills to find better and simpler
+                        ways to connect elements.
+                    </p>
+                </div>
+            </div>
         </section>
     );
 }

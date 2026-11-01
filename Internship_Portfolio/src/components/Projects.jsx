@@ -1,112 +1,144 @@
 
 import { useState } from "react";
 
+const projects = [
+    {
+        id: 1,
+        name: "Weather App",
+        category: "web",
+        tech: ["React", "API"],
+        description: "Description not added yet.",
+        liveLink: "",
+        githubLink: ""
+    },
+    {
+        id: 2,
+        name: "Todo App",
+        category: "web",
+        tech: ["JavaScript"],
+        description: "Description not added yet.",
+        liveLink: "",
+        githubLink: ""
+    },
+    {
+        id: 3,
+        name: "Portfolio",
+        category: "design",
+        tech: ["HTML", "CSS"],
+        description: "Description not added yet.",
+        liveLink: "",
+        githubLink: ""
+    },
+    {
+        id: 4,
+        name: "Calculator",
+        category: "web",
+        tech: ["JavaScript"],
+        description: "Description not added yet.",
+        liveLink: "",
+        githubLink: ""
+    }
+];
+
 function Projects() {
+    const [activeFilter, setActiveFilter] = useState("all");
 
-    // Project information
-    const projects = [
-        {
-            id: 1,
-            name: "Weather App",
-            category: "web",
-            tech: ["React", "API"]
-        },
-        {
-            id: 2,
-            name: "Todo App",
-            category: "web",
-            tech: ["Javascript"]
-        },
-        {
-            id: 3,
-            name: "Portfolio",
-            category: "design",
-            tech: ["HTML, CSS"]
-        },
-        {
-            id: 4,
-            name: "Calculator",
-            category: "web",
-            tech: ["Javascript"]
-        }
-    ];
+    const filters = ["all", "web", "design"];
 
-    // Selected filter
-    const [filter, setFilter] = useState("all");
-
-    // Filter projects
     const filteredProjects =
-        filter === "all"
+        activeFilter === "all"
             ? projects
             : projects.filter(
-                (project) => project.category === filter
+                (project) => project.category === activeFilter
             );
 
     return (
-        <section id="projects" className="project-section">
+        <section className="projects-section" id="projects">
+            <div className="projects-container">
+                <p className="section-subtitle">What I've worked on</p>
+                <h2 className="section-title">My Projects</h2>
 
-            <h2>My Project</h2>
+                {/* Project filters */}
+                <div className="project-filters">
+                    {filters.map((filter) => (
+                        <button
+                            key={filter}
+                            type="button"
+                            className={
+                                activeFilter === filter ? "active" : ""
+                            }
+                            onClick={() => setActiveFilter(filter)}
+                            aria-pressed={activeFilter === filter}
+                        >
+                            {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                        </button>
+                    ))}
+                </div>
 
-            <div className="project-filters">
+                {/* Project cards */}
+                <div className="projects-grid">
+                    {filteredProjects.map((project) => (
+                        <article className="project-card" key={project.id}>
+                            <div className="project-card-body">
+                                <h3>{project.name}</h3>
 
-                <button
-                    className={`filter btn ${filter === "all" ? "active" : ""}`}
-                    onClick={() => setFilter("all")}
-                >
-                    All
-                </button>
+                                <p className="project-description">
+                                    {project.description}
+                                </p>
 
-                <button
-                    className={`filter btn ${filter === "web" ? "active" : ""}`}
-                    onClick={() => setFilter("web")}
-                >
-                    Web
-                </button>
+                                <div className="project-tags">
+                                    {project.tech.map((technology) => (
+                                        <span
+                                            className="tag"
+                                            key={technology}
+                                        >
+                                            {technology}
+                                        </span>
+                                    ))}
+                                </div>
 
-                <button
-                    className={`filter btn ${filter === "design" ? "active" : ""}`}
-                    onClick={() => setFilter("design")}
-                >
-                    Design
-                </button>
+                                <div className="project-links">
+                                    {project.liveLink ? (
+                                        <a
+                                            href={project.liveLink}
+                                            className="btn btn-primary"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            Live Demo
+                                        </a>
+                                    ) : (
+                                        <span className="project-link-placeholder">
+                                            Live Demo not added
+                                        </span>
+                                    )}
 
-            </div>
-
-            <div className="project-grid">
-
-                {filteredProjects.map((project) => (
-
-                    <article className="project-card" key={project.id}>
-
-                        <div className="project-card-body">
-
-                            <h3>{project.name}</h3>
-
-                            <div className="project-tags">
-
-                                {project.tech.map((technology) => (
-                                    <span
-                                        className="tag"
-                                        key={technology}
-                                    >
-                                        {technology}
-                                    </span>
-                                ))}
-
+                                    {project.githubLink ? (
+                                        <a
+                                            href={project.githubLink}
+                                            className="btn btn-secondary"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            GitHub
+                                        </a>
+                                    ) : (
+                                        <span className="project-link-placeholder">
+                                            GitHub link not added
+                                        </span>
+                                    )}
+                                </div>
                             </div>
+                        </article>
+                    ))}
+                </div>
 
-                            <a href="#" className="btn btn-primary">
-                                View Project
-                            </a>
-
-                        </div>
-
-                    </article>
-
-                ))}
-
+                {filteredProjects.length === 0 && (
+                    <p className="no-projects">
+                        No projects found in this category.
+                    </p>
+                )}
             </div>
-
         </section>
     );
 }

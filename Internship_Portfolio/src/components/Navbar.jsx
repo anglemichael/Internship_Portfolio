@@ -2,21 +2,22 @@
 import { useEffect, useState } from "react";
 
 function Navbar() {
-    // Mobile menu state
+
+    // 1. Mobile menu state
     const [menuOpen, setMenuOpen] = useState(false);
 
-    // Theme state
-    const [theme, setTheme] = useState(
-        () => localStorage.getItem("theme") || "light"
-    );
+    // 2. Load saved theme from localStorage
+    const [theme, setTheme] = useState(() => {
+        return localStorage.getItem("theme") || "light";
+    });
 
-    // Header scroll state
+    // 3. Header shadow state
     const [scrolled, setScrolled] = useState(false);
 
-    // Active navigation link
+    // 4. Active navigation section
     const [activeSection, setActiveSection] = useState("");
 
-    // Apply theme to body and save it
+    // Apply and save theme whenever it changes
     useEffect(() => {
         document.body.dataset.theme = theme;
         localStorage.setItem("theme", theme);
@@ -29,22 +30,27 @@ function Navbar() {
         );
     }
 
-    // Toggle mobile menu
+    // Toggle mobile navigation
     function toggleMenu() {
         setMenuOpen((previous) => !previous);
     }
 
-    // Close menu when a navigation link is clicked
+    // Close mobile navigation
     function closeMenu() {
         setMenuOpen(false);
     }
 
-    // Handle scrolling and active navigation
+    // Handle scrolling and window resizing
     useEffect(() => {
+
         function handleScroll() {
+
+            // Header shadow
             setScrolled(window.scrollY > 50);
 
+            // Find active section
             const sections = document.querySelectorAll("section[id]");
+
             let current = "";
 
             sections.forEach((section) => {
@@ -56,6 +62,7 @@ function Navbar() {
             setActiveSection(current);
         }
 
+        // Close mobile menu on desktop screen sizes
         function handleResize() {
             if (window.innerWidth > 768) {
                 setMenuOpen(false);
@@ -65,16 +72,20 @@ function Navbar() {
         window.addEventListener("scroll", handleScroll);
         window.addEventListener("resize", handleResize);
 
+        // Set correct initial scroll state
         handleScroll();
 
+        // Remove listeners when component unmounts
         return () => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("resize", handleResize);
         };
+
     }, []);
 
     return (
         <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
+
             <nav className="navbar">
 
                 <div className="logo">AEB</div>
@@ -142,6 +153,7 @@ function Navbar() {
                 </button>
 
             </nav>
+
         </header>
     );
 }

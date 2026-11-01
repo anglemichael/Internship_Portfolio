@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Contact() {
 
@@ -11,9 +11,18 @@ function Contact() {
 
     const [errors, setErrors] = useState({});
 
-    const [sending, setSending] = useState(false);
+    // idle, sending or sent
+    const [status, setStatus] = useState("idle");
 
-    const [sent, setSent] = useState(false);
+    // Store the active timer so it can be cleaned up
+    const timerRef = useRef(null);
+
+    // Clean up pending timer if the component is removed
+    useEffect(() => {
+        return () => {
+            clearTimeout(timerRef.current);
+        };
+    }, []);
 
     // Update form values
     function handleChange(event) {
@@ -23,16 +32,11 @@ function Contact() {
             ...previous,
             [name]: value
         }));
-
-        // Remove the field's error when the user edits it
-        setErrors((previous) => ({
-            ...previous,
-            [name]: ""
-        }));
     }
 
     // Validate form
     function validateForm() {
+
         const newErrors = {};
 
         if (!formData.name.trim()) {
@@ -53,35 +57,38 @@ function Contact() {
         return Object.keys(newErrors).length === 0;
     }
 
-    // Handle form submission
-    async function handleSubmit(event) {
+    // Submit form
+    function handleSubmit(event) {
+
         event.preventDefault();
+
+        // Clear previous validation errors
+        setErrors({});
 
         if (!validateForm()) {
             return;
         }
 
-        setSending(true);
-        setSent(false);
+        setStatus("sending");
 
-        // Simulate the sending process
-        await new Promise((resolve) =>
-            setTimeout(resolve, 1500)
-        );
+        // Simulate sending for 1.5 seconds
+        timerRef.current = setTimeout(() => {
 
-        setSending(false);
-        setSent(true);
+            setStatus("sent");
 
-        setFormData({
-            name: "",
-            email: "",
-            message: ""
-        });
+            // Clear form after simulated submission
+            setFormData({
+                name: "",
+                email: "",
+                message: ""
+            });
 
-        // Restore button after 3 seconds
-        setTimeout(() => {
-            setSent(false);
-        }, 3000);
+            // Restore button after another 3 seconds
+            timerRef.current = setTimeout(() => {
+                setStatus("idle");
+            }, 3000);
+
+        }, 1500);
     }
 
     return (
@@ -95,6 +102,7 @@ function Contact() {
                 noValidate
             >
 
+                {/* Name field */}
                 <div className="form-group">
 
                     <label htmlFor="name">Name</label>
@@ -106,6 +114,7 @@ function Contact() {
                         placeholder="Enter your name"
                         value={formData.name}
                         onChange={handleChange}
+                        required
                         className={errors.name ? "error" : ""}
                     />
 
@@ -117,6 +126,7 @@ function Contact() {
 
                 </div>
 
+                {/* Email field */}
                 <div className="form-group">
 
                     <label htmlFor="email">Email</label>
@@ -128,6 +138,7 @@ function Contact() {
                         placeholder="Enter your email"
                         value={formData.email}
                         onChange={handleChange}
+                        required
                         className={errors.email ? "error" : ""}
                     />
 
@@ -139,6 +150,7 @@ function Contact() {
 
                 </div>
 
+                {/* Message field */}
                 <div className="form-group">
 
                     <label htmlFor="message">Message</label>
@@ -149,6 +161,7 @@ function Contact() {
                         placeholder="Enter message"
                         value={formData.message}
                         onChange={handleChange}
+                        required
                         className={errors.message ? "error" : ""}
                     />
 
@@ -163,11 +176,11 @@ function Contact() {
                 <button
                     type="submit"
                     className="btn btn-primary"
-                    disabled={sending}
+                    disabled={status !== "idle"}
                 >
-                    {sending
+                    {status === "sending"
                         ? "sending..."
-                        : sent
+                        : status === "sent"
                             ? "✅ Message Sent"
                             : "Send Message"}
                 </button>
