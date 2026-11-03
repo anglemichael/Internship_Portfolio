@@ -165,27 +165,40 @@ section h2::after {
 
 /* HERO SECTION */
 
+
+/* HERO SECTION */
+
 .hero-section {
-    background: linear-gradient(
-        145deg,
-        var(--hero-start),
-        var(--hero-end)
-    );
+    background:
+        linear-gradient(
+            rgba(35, 42, 35, 0.58),
+            rgba(35, 42, 35, 0.68)
+        ),
+        url('/images/hero-bg.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
 
     color: var(--ivory);
     text-align: center;
     padding: 120px 5%;
     min-height: 420px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    box-shadow: inset 0 -8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .hero-section h1 {
     font-size: clamp(2rem, 5vw, 3.2rem);
     margin-bottom: 20px;
     color: var(--ivory);
+    text-shadow: 2px 3px 8px rgba(0, 0, 0, 0.45);
 }
 
 .highlight {
@@ -196,7 +209,9 @@ section h2::after {
     font-size: 1.1rem;
     max-width: 650px;
     margin-bottom: 30px;
+    text-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
 }
+
 
 .hero-button {
     display: flex;
@@ -241,15 +256,32 @@ section h2::after {
 
 /* ABOUT SECTION */
 
+
+/* ABOUT SECTION */
+
 .about-section {
     text-align: center;
-    background: var(--bg);
+
+    background:
+        linear-gradient(
+            rgba(247, 243, 236, 0.84),
+            rgba(232, 210, 181, 0.84)
+        ),
+        url('/images/about-bg.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+
+    box-shadow: inset 0 5px 15px rgba(57, 44, 40, 0.08);
 }
 
 .about-section p {
     max-width: 700px;
     margin: 25px auto 0;
     font-size: 1.05rem;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
 }
 
 .profile-figure {
@@ -265,7 +297,7 @@ section h2::after {
     border-radius: 50%;
     object-fit: cover;
     border: 5px solid var(--cream);
-    box-shadow: var(--shadow);
+    box-shadow: 0 8px 25px rgba(57, 44, 40, 0.25);
 }
 
 .profile-figure figcaption {
@@ -476,15 +508,31 @@ section h2::after {
 
 /*  FOOTER*/
 
+
+/* FOOTER */
+
 .site-footer {
-    background: var(--footer);
+    background:
+        linear-gradient(
+            rgba(65, 12, 10, 0.86),
+            rgba(65, 12, 10, 0.92)
+        ),
+        url('/images/footer-bg.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
     color: var(--cream);
     text-align: center;
-    padding: 40px 5%;
+    padding: 50px 5%;
+
+    box-shadow: 0 -5px 20px rgba(57, 44, 40, 0.12);
 }
 
 .site-footer p {
     margin-bottom: 15px;
+    text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.35);
 }
 
 .site-footer nav {
@@ -572,7 +620,6 @@ body[data-theme="dark"] .highlight {
     color: var(--cream);
 }
 
-body[data-theme="dark"] .about-section,
 body[data-theme="dark"] .project-section,
 body[data-theme="dark"] .contact-section {
     background: var(--bg);
@@ -620,14 +667,72 @@ body[data-theme="dark"] textarea::placeholder {
     color: #b6bcb4;
 }
 
-body[data-theme="dark"] .site-footer {
-    background: var(--footer);
-    color: var(--cream);
-}
-
 body[data-theme="dark"] .theme-toggle {
     color: var(--cream);
 }
+
+/* DARK MODE BACKGROUND IMAGES */
+
+/* Hero */
+
+body[data-theme="dark"] .hero-section {
+    background-image:
+        linear-gradient(
+            rgba(10, 15, 12, 0.76),
+            rgba(10, 15, 12, 0.84)
+        ),
+        url('/images/hero-bg.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* About */
+
+body[data-theme="dark"] .about-section {
+    background-image:
+        linear-gradient(
+            rgba(15, 20, 17, 0.82),
+            rgba(15, 20, 17, 0.88)
+        ),
+        url('/images/about-bg.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: var(--text);
+}
+
+/* About text */
+
+body[data-theme="dark"] .about-section p {
+    color: var(--text);
+    text-shadow: none;
+}
+
+body[data-theme="dark"] .profile-figure figcaption {
+    color: var(--olive);
+}
+
+/* Footer */
+
+body[data-theme="dark"] .site-footer {
+    background-image:
+        linear-gradient(
+            rgba(8, 12, 10, 0.90),
+            rgba(8, 12, 10, 0.95)
+        ),
+        url('/images/footer-bg.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: var(--cream);
+}
+
 
 
 
